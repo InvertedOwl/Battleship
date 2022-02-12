@@ -58,25 +58,19 @@ public class Game {
         }
     }
 
-    public void removePointFromShip(Ship ship, int row, int column) {
-        for (int i = 0; i < ship.getShipPoints().size(); i++){
-            if (ship.getShipPoints().get(i).getX() == column && ship.getShipPoints().get(i).getY() == row) {
-                ship.getShipPoints().remove(i);
-                i--;
-            }
-        }
-        if (ship.getShipPoints().size() == 0){
-
-        }
-    }
-
     public boolean checkWin(Player player) {
-        boolean win = false;
-        for (Ship ship : player.getShipsList()) {
-            if (ship.getShipPoints().size() == 0) {
-                win = true;
+        boolean win = true;
+        for (int i = 0; i < player.getPlayerboard().length; i++) {
+            for (int j = 0; j < player.getPlayerboard()[0].length; j++) {
+                if (player.getPlayerboard()[i][j] != 0){
+                    if (Main.debug)
+                        System.out.println("Spot " + j + ", " + i + " is value " + player.getPlayerboard()[i][j] + " and is not 0");
+                    win = false;
+                }
             }
         }
+        if (Main.debug)
+        System.out.println(win);
 
         return win;
     }

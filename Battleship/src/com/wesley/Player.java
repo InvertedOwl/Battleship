@@ -7,7 +7,6 @@ import java.util.Scanner;
 public class Player {
     private int[][] opponentboard = new int[10][10];
     private int[][] playerboard = new int[10][10];
-    private ArrayList<Ship> shipsList = new ArrayList<>();
 
     public int[][] getOpponentboard() {
         return opponentboard;
@@ -24,15 +23,15 @@ public class Player {
     public void setPlayerboard(int[][] playerboard) {
         this.playerboard = playerboard;
     }
+    private int numShips = 0;
 
-    public ArrayList<Ship> getShipsList() {
-        return shipsList;
-    }
 
     public PickSpotResponse pickSpot(Scanner scanner) {
         String spot = scanner.nextLine();
         int row = 0;
         int column = 0;
+
+
         boolean horizontal = false;
         try {
             row = Integer.parseInt(spot.substring(1, 2));
@@ -41,44 +40,43 @@ public class Player {
         } catch (Exception e){
             horizontal = true;
         }
-        if (shipsList.size() < Main.numShips){
+        if (numShips < Main.numShips){
             if (horizontal) {
-                if (column + shipsList.size() + 1 < playerboard[row].length){
+                if (column + numShips + 1 < playerboard[row].length - 1){
 
                 } else {
                     System.out.println("Invalid spot, Ship goes off board. Please try again");
-                    System.out.println(column + shipsList.size() + 1 + ", " + playerboard[row].length);
+                    System.out.println(column + numShips + 1 + ", " + playerboard[row].length);
                 }
             }
             if (!horizontal) {
-                if (row + shipsList.size() + 1 < playerboard.length) {
+                if (row + numShips + 1 < playerboard.length - 1) {
 
                 } else {
                     System.out.println("Invalid spot, Ship goes off board. Please try again");
-                    System.out.println(column + shipsList.size() + 1 + ", " + playerboard[row].length);
+                    System.out.println(column + numShips + 1 + ", " + playerboard[row].length);
                 }
             }
         }
 
         System.out.println(column + ", " + row);
-        return new PickSpotResponse(row, column, getShipsList().size() + 1, horizontal);
+        return new PickSpotResponse(row, column, numShips + 1, horizontal);
     }
 
 
     public void takeStartTurn(PickSpotResponse pickSpotResponse){
-        Ship ship = new Ship( shipsList.size() + 1, new ArrayList<>());
         for (int i = 0; i < pickSpotResponse.getSize(); i ++){
             //line 70
             if (pickSpotResponse.isHorizontal()){
                 playerboard[pickSpotResponse.getRow()][pickSpotResponse.getColumn() + i] = 1;
-                ship.getShipPoints().add(new Point(pickSpotResponse.getColumn() + i, pickSpotResponse.getRow()));
             } else {
                 playerboard[pickSpotResponse.getRow() + i][pickSpotResponse.getColumn()] = 1;
-                ship.getShipPoints().add(new Point(pickSpotResponse.getColumn(), pickSpotResponse.getRow() + i));
-
             }
         }
+        numShips++;
+    }
 
-        getShipsList().add(ship);
+    public int getNumShips() {
+        return numShips;
     }
 }
