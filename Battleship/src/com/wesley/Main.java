@@ -2,6 +2,7 @@ package com.wesley;
 
 
 import java.io.IOException;
+import java.security.spec.ECField;
 import java.util.Scanner;
 
 
@@ -88,13 +89,12 @@ public class Main {
             } else {
                 game.getPlayer1().getOpponentboard()[response.getRow()][response.getColumn()] = 2;
             }
-            game.getPlayer1().getPlayerboard()[response.getRow()][response.getColumn()] = 0;
             game.printOpponentBoard(game.getPlayer1());
 
             System.out.println("Click to continue");
             scanner.nextLine();
 
-            if (game.checkWin(game.getPlayer1())) {
+            if (game.checkWin() != null) {
                 win = true;
                 System.out.println("Game over! Player 2 won!");
             }
@@ -110,16 +110,16 @@ public class Main {
             } else {
                 game.getPlayer2().getOpponentboard()[response.getRow()][response.getColumn()] = 2;
             }
-            game.getPlayer2().getPlayerboard()[response.getRow()][response.getColumn()] = 0;
             game.printOpponentBoard(game.getPlayer2());
             System.out.println("Click to continue");
             scanner.nextLine();
 
-            if (game.checkWin(game.getPlayer2())) {
+            if (game.checkWin() != null) {
                 win = true;
                 System.out.println("Game over! Player 1 won!");
             }
         }
+
         if (Main.debug)
         System.out.println("it ended");
     }

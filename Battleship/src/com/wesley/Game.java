@@ -58,21 +58,24 @@ public class Game {
         }
     }
 
-    public boolean checkWin(Player player) {
+    public Player checkWin() {
         boolean win = true;
-        for (int i = 0; i < player.getPlayerboard().length; i++) {
-            for (int j = 0; j < player.getPlayerboard()[0].length; j++) {
-                if (player.getPlayerboard()[i][j] != 0){
-                    if (Main.debug)
-                        System.out.println("Spot " + j + ", " + i + " is value " + player.getPlayerboard()[i][j] + " and is not 0");
-                    win = false;
-                }
+        for (int i = 0; i < player1.getPlayerboard().length; i++) {
+            for (int j = 0; j < player1.getPlayerboard().length; j++) {
+                if (player2.getOpponentboard()[i][j] == 0 && player1.getPlayerboard()[i][j] != 0) win = false;
             }
         }
-        if (Main.debug)
-        System.out.println(win);
+        if (win) return player2;
 
-        return win;
+
+
+        win = true;
+        for (int i = 0; i < player2.getPlayerboard().length; i++) {
+            for (int j = 0; j < player2.getPlayerboard().length; j++) {
+                if (player1.getOpponentboard()[i][j] == 0 && player2.getPlayerboard()[i][j] != 0) return null;
+            }
+        }
+        return player1;
     }
 
 }
