@@ -34,7 +34,7 @@ public class Game {
                     System.out.print("Z  ");
                 }
             }
-            System.out.println("");
+            System.out.println();
         }
     }
     public void printOpponentBoard(Player player) {
@@ -54,7 +54,7 @@ public class Game {
                     System.out.print("M  ");
                 }
             }
-            System.out.println("");
+            System.out.println();
         }
     }
 
@@ -67,15 +67,23 @@ public class Game {
         }
         if (win) return player2;
 
-
-
-        win = true;
         for (int i = 0; i < player2.getPlayerboard().length; i++) {
             for (int j = 0; j < player2.getPlayerboard().length; j++) {
                 if (player1.getOpponentboard()[i][j] == 0 && player2.getPlayerboard()[i][j] != 0) return null;
             }
         }
         return player1;
+    }
+
+    public void printTitle() {
+        System.out.println("""
+                ██╗    ██╗ █████╗ ██████╗ ██████╗  ██████╗  █████╗ ████████╗███████╗
+                ██║    ██║██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝
+                ██║ █╗ ██║███████║██████╔╝██████╔╝██║   ██║███████║   ██║   ███████╗
+                ██║███╗██║██╔══██║██╔══██╗██╔══██╗██║   ██║██╔══██║   ██║   ╚════██║
+                ╚███╔███╔╝██║  ██║██║  ██║██████╔╝╚██████╔╝██║  ██║   ██║   ███████║
+                 ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝
+                                                                                   \s""");
     }
 
 }

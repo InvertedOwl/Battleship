@@ -10,24 +10,17 @@ public class Main {
 
     public static final int numShips = 5;
     public static boolean debug = false;
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         boolean win = false;
-        System.out.println(" ___       __   ________  ________  ________  ________  ________  _________  ________      \n" +
-                "|\\  \\     |\\  \\|\\   __  \\|\\   __  \\|\\   __  \\|\\   __  \\|\\   __  \\|\\___   ___\\\\   ____\\     \n" +
-                "\\ \\  \\    \\ \\  \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\|\\  \\ \\  \\|\\  \\|___ \\  \\_\\ \\  \\___|_    \n" +
-                " \\ \\  \\  __\\ \\  \\ \\   __  \\ \\   _  _\\ \\   __  \\ \\  \\\\\\  \\ \\   __  \\   \\ \\  \\ \\ \\_____  \\   \n" +
-                "  \\ \\  \\|\\__\\_\\  \\ \\  \\ \\  \\ \\  \\\\  \\\\ \\  \\|\\  \\ \\  \\\\\\  \\ \\  \\ \\  \\   \\ \\  \\ \\|____|\\  \\  \n" +
-                "   \\ \\____________\\ \\__\\ \\__\\ \\__\\\\ _\\\\ \\_______\\ \\_______\\ \\__\\ \\__\\   \\ \\__\\  ____\\_\\  \\ \n" +
-                "    \\|____________|\\|__|\\|__|\\|__|\\|__|\\|_______|\\|_______|\\|__|\\|__|    \\|__| |\\_________\\\n" +
-                "                                                                               \\|_________|\n" +
-                "                                                                                           ");
+
         Scanner scanner = new Scanner(System.in);
 
         Game game = new Game();
+        game.printTitle();
         game.setPlayer1(new Player());
         game.setPlayer2(new Player());
 
-        System.out.println("Press enter to start!");
+        System.out.println("Press enter to start! ('debug' for automatic ship placement)");
         String string = scanner.nextLine();
         if (!string.equals("debug")) {
 
@@ -91,7 +84,7 @@ public class Main {
             }
             game.printOpponentBoard(game.getPlayer1());
 
-            System.out.println("Click to continue");
+            System.out.println("Enter to continue");
             scanner.nextLine();
 
             if (game.checkWin() != null) {
