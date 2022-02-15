@@ -1,7 +1,5 @@
 package com.wesley;
 
-import java.awt.*;
-
 public class Game {
     private Player player1;
     private Player player2;
