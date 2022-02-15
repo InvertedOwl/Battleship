@@ -15,24 +15,28 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
+        // Creates game and player objects
         Game game = new Game();
         game.printTitle();
         game.setPlayer1(new Player());
         game.setPlayer2(new Player());
 
+        // Check for debug
         System.out.println("Press enter to start! ('debug' for automatic ship placement)");
         String string = scanner.nextLine();
         if (!string.equals("debug")) {
 
+            // Place ships player 1
             System.out.println("Player 1 please place your ships");
             while (game.getPlayer1().getNumShips() < numShips) {
                 game.printPlayerBoard(game.getPlayer1());
-                System.out.println("Pick your spot for your ship! ex: 'a1 h'");
+                System.out.println("Pick your spot for your ship! ex: 'a1 h' ('h' for horizontal and 'v' for vertical)");
                 game.getPlayer1().takeStartTurn(game.getPlayer1().pickSpot(scanner));
             }
 
             System.out.println(repeat(50, "\n"));
 
+            // Place ships player 2
             System.out.println("Player 2 please place your ships");
             while (game.getPlayer2().getNumShips() < numShips) {
                 game.printPlayerBoard(game.getPlayer2());
@@ -40,43 +44,21 @@ public class Main {
                 game.getPlayer2().takeStartTurn(game.getPlayer2().pickSpot(scanner));
                 game.printPlayerBoard(game.getPlayer2());
             }
+
         } else {
-            Main.debug = true;
-            System.out.println("Welcome to debug! Ships have been placed for you.");
-            game.getPlayer1().setPlayerboard(new int[][]{
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 1, 0, 1, 0, 0},
-                    {0, 0, 1, 1, 0, 1, 0, 1, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-                    {0, 0, 1, 1, 1, 1, 0, 1, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-            });
-            game.getPlayer2().setPlayerboard(new int[][]{
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-            });
+            // if player says debug then enable it
+            game.enableDebug();
         }
 
+        // Basic game loop
         while (!win){
             System.out.println(repeat(50, "\n"));
             System.out.println("Player 1 try to guess your opponent ships!");
             game.printOpponentBoard(game.getPlayer1());
+            // Player 1 guess
             PickSpotResponse response = game.getPlayer1().pickSpot(scanner);
 
+            // Get right character
             if (game.getPlayer2().getPlayerboard()[response.getRow()][response.getColumn()] != 0) {
                 game.getPlayer1().getOpponentboard()[response.getRow()][response.getColumn()] = 3;
             } else {
@@ -98,6 +80,7 @@ public class Main {
             game.printOpponentBoard(game.getPlayer2());
             response = game.getPlayer2().pickSpot(scanner);
 
+            // Player 2 guess
             if (game.getPlayer1().getPlayerboard()[response.getRow()][response.getColumn()] != 0) {
                 game.getPlayer2().getOpponentboard()[response.getRow()][response.getColumn()] = 3;
             } else {
@@ -117,6 +100,12 @@ public class Main {
         System.out.println("it ended");
     }
 
+
+    /**
+     * @param count Number of things to duplicate
+     * @param with the string to duplicate
+     * @return Returns the repeated string
+     */
     public static String repeat(int count, String with) {
         return new String(new char[count]).replace("\0", with);
     }

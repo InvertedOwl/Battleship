@@ -26,6 +26,10 @@ public class Player {
     private int numShips = 0;
 
 
+    /**
+     * @param scanner
+     * @return Returns an object with all the information needed to place a ship or guess a spot
+     */
     public PickSpotResponse pickSpot(Scanner scanner) {
         String spot = scanner.nextLine();
         int row = 0;
@@ -40,6 +44,9 @@ public class Player {
         } catch (Exception e){
             horizontal = true;
         }
+
+
+        // TODO gross code do not look please
         if (numShips < Main.numShips){
             if (horizontal) {
                 if (column + numShips + 1 < playerboard[row].length - 1){
@@ -59,12 +66,35 @@ public class Player {
             }
         }
 
-        System.out.println(column + ", " + row);
+        while (!horizontal && !(row + numShips + 1 < playerboard.length - 1)){
+            System.out.println("Invalid spot, Ship goes off board. Please try again");
+            spot = scanner.nextLine();
+            try {
+                row = Integer.parseInt(spot.substring(1, 2));
+                column = (int) spot.substring(0, 1).toLowerCase().charAt(0) - 97;
+                horizontal = spot.substring(3, 4).contains("h");
+            } catch (Exception e){
+                horizontal = true;
+            }
+        }
+        while (horizontal && !(column + numShips + 1 < playerboard[row].length - 1)){
+            System.out.println("Invalid spot, Ship goes off board. Please try again");
+            spot = scanner.nextLine();
+            try {
+                row = Integer.parseInt(spot.substring(1, 2));
+                column = (int) spot.substring(0, 1).toLowerCase().charAt(0) - 97;
+                horizontal = spot.substring(3, 4).contains("h");
+            } catch (Exception e){
+                horizontal = true;
+            }
+        }
+
         return new PickSpotResponse(row, column, numShips + 1, horizontal);
     }
 
 
-    public void takeStartTurn(PickSpotResponse pickSpotResponse){
+    public void takeStartTurn(PickSpotResponse pickSpotResponse) {
+
         for (int i = 0; i < pickSpotResponse.getSize(); i ++){
             //line 70
             if (pickSpotResponse.isHorizontal()){

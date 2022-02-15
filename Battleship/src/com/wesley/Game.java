@@ -1,5 +1,7 @@
 package com.wesley;
 
+import java.util.Scanner;
+
 public class Game {
     private Player player1;
     private Player player2;
@@ -35,6 +37,11 @@ public class Game {
             System.out.println();
         }
     }
+
+    /**
+     * Will print the guessing board that the referenced player guesses on
+     * @param player The player in which the opponent board will be printed
+     */
     public void printOpponentBoard(Player player) {
         System.out.println("  A  B  C  D  E  F  G  H  I  J");
         for(int i = 0; i < player.getOpponentboard().length; i++){
@@ -56,6 +63,10 @@ public class Game {
         }
     }
 
+    /**
+     * Method to check if a player has won by checking if the player has all the hits on the other players board
+     * @return Player that won | Null if no one has won
+     */
     public Player checkWin() {
         boolean win = true;
         for (int i = 0; i < player1.getPlayerboard().length; i++) {
@@ -76,12 +87,48 @@ public class Game {
     public void printTitle() {
         System.out.println("""
                 ██╗    ██╗ █████╗ ██████╗ ██████╗  ██████╗  █████╗ ████████╗███████╗
-                ██║    ██║██╔══██╗██╔══██╗██╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝
+                ██║    ██║██╔══██╗██╔══██╗█╔══██╗██╔═══██╗██╔══██╗╚══██╔══╝██╔════╝
                 ██║ █╗ ██║███████║██████╔╝██████╔╝██║   ██║███████║   ██║   ███████╗
                 ██║███╗██║██╔══██║██╔══██╗██╔══██╗██║   ██║██╔══██║   ██║   ╚════██║
                 ╚███╔███╔╝██║  ██║██║  ██║██████╔╝╚██████╔╝██║  ██║   ██║   ███████║
                  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝  ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚══════╝
                                                                                    \s""");
     }
+
+
+    /**
+     * Enabled debug mode which just automatically sets up boards for easy debugging
+     */
+    public void enableDebug() {
+        Main.debug = true;
+        System.out.println("Welcome to debug! Ships have been placed for you.");
+        getPlayer1().setPlayerboard(new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 1, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 0, 1, 0, 0},
+                {0, 0, 1, 1, 0, 1, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 1, 0, 0},
+                {0, 0, 1, 1, 1, 1, 0, 1, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+
+        });
+        getPlayer2().setPlayerboard(new int[][]{
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 1, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+
+        });
+    }
+
 
 }
